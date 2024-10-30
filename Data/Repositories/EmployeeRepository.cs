@@ -2,6 +2,7 @@
 using Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Model;
+using Serilog;
 
 namespace Data.Repositories
 {
@@ -13,42 +14,86 @@ namespace Data.Repositories
             this.context = context;
         }
 
-        public async Task Create(Employee param)
+        public async Task Create(Employee employee)
         {
-            await context.Employees.AddAsync(param);
-            await context.SaveChangesAsync();
+            try
+            {
+                await context.Employees.AddAsync(employee);
+                await context.SaveChangesAsync();
+                Log.Information($"Сотрудник {employee.Id} добавлен.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Ошибка при добавлении сотрудника {employee.Id}.");
+            }
         }
 
         public async Task Delete(Guid id)
         {
-            await context.Employees
-                .Where(emp=>emp.Id == id)
-                .ExecuteDeleteAsync();
+            try
+            {
+                await context.Employees
+                    .Where(emp => emp.Id == id)
+                    .ExecuteDeleteAsync();
+                Log.Information($"Успешно удален сотрудник {id}.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Ошибка при удалении сотрудника {id}.");
+            }
         }
 
         public async Task<List<Employee>> GetAllAsync()
         {
-            return await context.Employees
-                .AsNoTracking()
-                .ToListAsync();
+            List<Employee> employees = [];
+            try
+            {
+                employees = await context.Employees
+                   .AsNoTracking()
+                   .ToListAsync();
+                Log.Information($"Успешно извлечено {employees.Count} сотрудников.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при извлечении сотрудников.");
+            }
+            return employees;
         }
 
         public async Task<Employee?> GetById(Guid id)
         {
-            return await context.Employees
-                .Where (emp=>emp.Id == id)
-                .FirstOrDefaultAsync();
+            Employee? employee = null;
+            try
+            {
+                employee = await context.Employees
+                    .Where(emp => emp.Id == id)
+                    .FirstOrDefaultAsync();
+                Log.Information($"Успешно извлечен сотрудник {id}.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при извлечении сотрудника.");
+            }
+            return employee;
         }
 
-        public async Task Update(Employee param)
+        public async Task Update(Employee employee)
         {
-            await context.Employees
-                .ExecuteUpdateAsync(s => s
-                    .SetProperty(emp => emp.FirstName, param.FirstName)
-                    .SetProperty(emp => emp.LastName, param.LastName)
-                    .SetProperty(emp => emp.Patronymic, param.Patronymic)
-                    .SetProperty(emp => emp.PhotoPath, param.PhotoPath)
-                    .SetProperty(emp => emp.Company, param.Company));
+            try
+            {
+                await context.Employees
+                    .ExecuteUpdateAsync(s => s
+                        .SetProperty(emp => emp.FirstName, employee.FirstName)
+                        .SetProperty(emp => emp.LastName, employee.LastName)
+                        .SetProperty(emp => emp.Patronymic, employee.Patronymic)
+                        .SetProperty(emp => emp.PhotoPath, employee.PhotoPath)
+                        .SetProperty(emp => emp.Company, employee.Company));
+                Log.Information($"Успешно обновлен сотрудник {employee.Id}.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, $"Ошибка при обновлении сотрудника {employee.Id}.");
+            }
         }
     }
 }
