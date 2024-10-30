@@ -15,6 +15,7 @@ namespace Data.Repositories
         }
         public async Task<Company?> GetById(Guid id)
         {
+            if(id == Guid.Empty) return null;
             Company? company = null;
             try
             {
@@ -75,6 +76,7 @@ namespace Data.Repositories
         }
         public async Task Delete(Guid id)
         {
+            if(id == Guid.Empty) return;
             try
             {
                 await context.Companies
