@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace View.Pages
 {
@@ -20,9 +9,40 @@ namespace View.Pages
     /// </summary>
     public partial class CompanyPage : Page
     {
+        private Company? currentCompany;
         public CompanyPage()
         {
             InitializeComponent();
+        }
+        public CompanyPage(Company company) : this()
+        {
+            currentCompany = company;
+            TitleTextBox.Text = company.Title;
+            DeleteButton.IsEnabled = true;
+        }
+        private void SaveButtonPressed(object sender, RoutedEventArgs e)
+        {
+            if (currentCompany == null)
+            {
+                var (newCompany, error) = Company.Create(Guid.NewGuid(), TitleTextBox.Text);
+            }
+            else
+            {
+                currentCompany.Title = TitleTextBox.Text;
+            }
+
+            NavigationService.GoBack();
+        }
+        private void DeleteButtonPressed(object sender, RoutedEventArgs e)
+        {
+            if(currentCompany != null)
+            {
+
+            }
+        }
+        private void CancelButtonPressed(object sender, RoutedEventArgs e)
+        {
+            if(NavigationService.CanGoBack) NavigationService.GoBack();
         }
     }
 }

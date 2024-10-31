@@ -13,7 +13,7 @@ namespace Data.Repositories
         {
             this.context = context;
         }
-        public async Task<Company?> GetById(Guid id)
+        public async Task<Company?> GetByIdAsync(Guid id)
         {
             if(id == Guid.Empty) return null;
             Company? company = null;
@@ -46,7 +46,7 @@ namespace Data.Repositories
             }
             return companies;
         }
-        public async Task Create(Company company)
+        public async Task CreateAsync(Company company)
         {
             try
             {
@@ -59,7 +59,25 @@ namespace Data.Repositories
                 Log.Error(ex, $"Ошибка при добавлении организации {company.Id}.");
             }
         }
-        public async Task Update(Company company)
+        public async Task CreateRangeAsync(List<Company> companies)
+        {
+            if (companies == null || companies.Count == 0)
+            {
+                Log.Warning("Попытка добавить пустой список компаний.");
+                return;
+            }
+            try
+            {
+                await context.Companies.AddRangeAsync(companies);
+                await context.SaveChangesAsync();
+                Log.Information($"Добавлено {companies.Count} компаний.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при добавлении группы компаний.");
+            }
+        }
+        public async Task UpdateAsync(Company company)
         {
             try
             {
@@ -74,7 +92,7 @@ namespace Data.Repositories
                 Log.Error(ex, $"Ошибка при обновлении организации {company.Id}.");
             }
         }
-        public async Task Delete(Guid id)
+        public async Task DeleteAsync(Guid id)
         {
             if(id == Guid.Empty) return;
             try

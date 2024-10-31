@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
@@ -26,6 +27,10 @@ namespace View.Pages
                 EmployeePhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName));
 
             }
+        }
+        private void CancelButtonPressed(object sender, RoutedEventArgs e)
+        {
+            if (NavigationService.CanGoBack) NavigationService.GoBack();
         }
     }
 }

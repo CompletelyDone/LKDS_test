@@ -1,5 +1,4 @@
-﻿using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace View.Pages
 {
@@ -26,12 +25,16 @@ namespace View.Pages
                         NavigationService.Navigate(employeePage);
                         break;
                     case "SearchEmployee":
+                        var searchEmployeePage = new SearchEmployeePage();
+                        NavigationService.Navigate(searchEmployeePage);
                         break;
                     case "AddCompany":
                         var companyPage = new CompanyPage();
                         NavigationService.Navigate(companyPage);
                         break;
                     case "SearchCompany":
+                        var searchCompanyPage = new SearchCompanyPage();
+                        NavigationService.Navigate(searchCompanyPage);
                         break;
                 }
             }

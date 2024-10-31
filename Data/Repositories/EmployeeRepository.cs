@@ -13,7 +13,7 @@ namespace Data.Repositories
         {
             this.context = context;
         }
-        public async Task Create(Employee employee)
+        public async Task CreateAsync(Employee employee)
         {
             try
             {
@@ -26,7 +26,25 @@ namespace Data.Repositories
                 Log.Error(ex, $"Ошибка при добавлении сотрудника {employee.Id}.");
             }
         }
-        public async Task Delete(Guid id)
+        public async Task CreateRangeAsync(List<Employee> employees)
+        {
+            if (employees == null || employees.Count == 0)
+            {
+                Log.Warning("Попытка добавить пустой список сотрудников.");
+                return;
+            }
+            try
+            {
+                await context.Employees.AddRangeAsync(employees);
+                await context.SaveChangesAsync();
+                Log.Information($"Добавлено {employees.Count} сотрудников.");
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка при добавлении группы сотрудников.");
+            }
+        }
+        public async Task DeleteAsync(Guid id)
         {
             if (id == Guid.Empty) return;
             try
@@ -57,9 +75,9 @@ namespace Data.Repositories
             }
             return employees;
         }
-        public async Task<Employee?> GetById(Guid id)
+        public async Task<Employee?> GetByIdAsync(Guid id)
         {
-            if(id == Guid.Empty) return null;
+            if (id == Guid.Empty) return null;
             Employee? employee = null;
             try
             {
@@ -74,7 +92,7 @@ namespace Data.Repositories
             }
             return employee;
         }
-        public async Task Update(Employee employee)
+        public async Task UpdateAsync(Employee employee)
         {
             try
             {
@@ -92,7 +110,8 @@ namespace Data.Repositories
                 Log.Error(ex, $"Ошибка при обновлении сотрудника {employee.Id}.");
             }
         }
-        public async Task<List<Employee>> SearchEmployeeByField(string field)
+
+        public async Task<List<Employee>> SearchEmployeeByFieldAsync(string field)
         {
             if (string.IsNullOrEmpty(field)) return [];
             List<Employee> possibleEmployee = [];

@@ -1,6 +1,4 @@
 ﻿using Serilog;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace View
@@ -30,5 +28,4 @@ namespace View
             base.OnExit(e);
         }
     }
-
 }

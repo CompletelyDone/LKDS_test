@@ -4,10 +4,11 @@ namespace Data.Abstractions
 {
     public interface IRepositoryBase<T> where T : class
     {
-        Task Create(T param);
+        Task CreateAsync(T param);
+        Task CreateRangeAsync(List<T> param);
         Task<List<T>> GetAllAsync();
-        Task<T?> GetById(Guid id);
-        Task Update(T param);
-        Task Delete(Guid id);
+        Task<T?> GetByIdAsync(Guid id);
+        Task UpdateAsync(T param);
+        Task DeleteAsync(Guid id);
     }
 }

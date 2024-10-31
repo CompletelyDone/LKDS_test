@@ -5,10 +5,18 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="CompanyPage">
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="Организация">
 
     <Grid>
-        
+        <StackPanel Margin="20">
+            <TextBlock Text="Название компании:" FontWeight="Bold" Margin="0,0,0,10"/>
+            <TextBox x:Name="TitleTextBox" Width="300"/>
+            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                <Button Content="Сохранить" Click="SaveButtonPressed" Width="100" Margin="0,0,10,0"/>
+                <Button x:Name="DeleteButton" Content="Удалить" Click="DeleteButtonPressed" Width="100" Margin="0,0,10,0" IsEnabled="False"/>
+                <Button Content="Отмена" Click="CancelButtonPressed" Width="100"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Page>
