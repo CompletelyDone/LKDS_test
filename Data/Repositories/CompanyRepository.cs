@@ -6,7 +6,7 @@ using Serilog;
 
 namespace Data.Repositories
 {
-    public class CompanyRepository : IRepositoryBase<Company>
+    public class CompanyRepository : ICompanyRepository
     {
         private readonly SQLiteDBContext context;
         public CompanyRepository(SQLiteDBContext context)

@@ -6,7 +6,7 @@ using Serilog;
 
 namespace Data.Repositories
 {
-    public class EmployeeRepository : IRepositoryBase<Employee>
+    public class EmployeeRepository : IEmployeeRepository
     {
         private readonly SQLiteDBContext context;
         public EmployeeRepository(SQLiteDBContext context)
@@ -110,7 +110,6 @@ namespace Data.Repositories
                 Log.Error(ex, $"Ошибка при обновлении сотрудника {employee.Id}.");
             }
         }
-
         public async Task<List<Employee>> SearchEmployeeByFieldAsync(string field)
         {
             if (string.IsNullOrEmpty(field)) return [];
