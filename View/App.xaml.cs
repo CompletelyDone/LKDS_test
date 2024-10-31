@@ -26,21 +26,29 @@ namespace View
                 .CreateLogger();
 
             Log.Information("Приложение запущено");
-
-            var services = new ServiceCollection();
-            services.AddSingleton<SQLiteDBContext>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddScoped<DataService>();
-            services.AddSingleton<MainWindowVM>();
-
-            serviceProvider = services.BuildServiceProvider();
-
-            var mainWindow = new MainWindow()
+            try
             {
-                DataContext = serviceProvider.GetService<MainWindowVM>()
-            };
-            mainWindow.Show();
+                var services = new ServiceCollection();
+                services.AddSingleton<SQLiteDBContext>();
+                services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+                services.AddScoped<ICompanyRepository, CompanyRepository>();
+                services.AddScoped<DataService>();
+                services.AddSingleton<MainWindowVM>();
+
+                serviceProvider = services.BuildServiceProvider();
+
+                Log.Information("Все сервисы успешно загружены.");
+
+                var mainWindow = new MainWindow()
+                {
+                    DataContext = serviceProvider?.GetService<MainWindowVM>()
+                };
+                mainWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Ошибка загрузки сервисов.");
+            }
         }
 
         protected override async void OnExit(ExitEventArgs e)
