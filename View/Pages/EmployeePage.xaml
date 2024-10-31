@@ -5,10 +5,63 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="EmployeePage">
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="Сотрудник">
+    <Page.Resources>
+        <Style x:Key="Buttons">
+            <Setter Property="Button.Width" Value="100"/>
+            <Setter Property="Button.Height" Value="50"/>
+            <Setter Property="Button.Margin" Value="10"/>
+            <Setter Property="Button.FontSize" Value="15"/>
+        </Style>
+        <Style x:Key="Labels">
+            <Setter Property="Label.FontSize" Value="19"/>
+        </Style>
+    </Page.Resources>
 
-    <Grid>
-        
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Левая колонка для фотографии -->
+        <StackPanel Grid.Column="0" HorizontalAlignment="Center" Margin="0 100 0 0">
+            <Image x:Name="EmployeePhoto"
+               Width="150"
+               Height="150"
+               Stretch="Uniform"
+               Source="../Assets/defaultPerson.jpg" 
+               MouseDown="EmployeePhotoMouseDown" />
+        </StackPanel>
+
+        <!-- Правая колонка для заполнения данных -->
+        <Grid Grid.Column="1" Margin="50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                <Label Style="{StaticResource Labels}" Content="Имя:" />
+                <Label Style="{StaticResource Labels}" Content="Фамилия:" />
+                <Label Style="{StaticResource Labels}" Content="Отчество:" />
+                <Label Style="{StaticResource Labels}" Content="Организация:" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+                <TextBox x:Name="FirstNameTextBox" Width="200" Margin="0 5 0 15"/>
+                <TextBox x:Name="LastNameTextBox" Width="200" Margin="0 5 0 15"/>
+                <TextBox x:Name="PatronymicTextBox" Width="200" Margin="0 5 0 15"/>
+                <ComboBox x:Name="OrganizationComboBox" Width="200" Margin="0 5 0 15"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="2" Grid.Row="1">
+                <Button Content="Сохранить" Style="{StaticResource Buttons}"/>
+                <Button Content="Назад" Style="{StaticResource Buttons}"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

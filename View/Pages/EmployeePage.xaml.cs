@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using Microsoft.Win32;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace View.Pages
 {
@@ -23,6 +12,20 @@ namespace View.Pages
         public EmployeePage()
         {
             InitializeComponent();
+        }
+
+        private void EmployeePhotoMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp|All Files|*.*",
+                Title = "Выберите фотографию сотрудника"
+            };
+            if (openFileDialog.ShowDialog() == true)
+            {
+                EmployeePhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+
+            }
         }
     }
 }
