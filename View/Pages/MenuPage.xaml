@@ -35,19 +35,19 @@
         <Label Grid.Row="0" Grid.Column="1" Content="Организации" Style="{StaticResource TopLabel}"/>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0">
-            <Button Style="{StaticResource MidButtons}" Margin="50 50 25 50">
+            <Button Style="{StaticResource MidButtons}" Margin="50 50 25 50" Click="OnNavigateButtonPressed" Tag="AddEmployee">
                 <Image Source="../Assets/plus.png"/>
             </Button>
-            <Button Style="{StaticResource MidButtons}" Margin="25 50 50 50">
+            <Button Style="{StaticResource MidButtons}" Margin="25 50 50 50" Click="OnNavigateButtonPressed" Tag="SearchEmployee">
                 <Image Source="../Assets/employeeMagnifier.png"/>
             </Button>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1">
-            <Button Style="{StaticResource MidButtons}" Margin="50 50 25 50">
+            <Button Style="{StaticResource MidButtons}" Margin="50 50 25 50" Click="OnNavigateButtonPressed" Tag="AddCompany">
                 <Image Source="../Assets/plus.png"/>
             </Button>
-            <Button Style="{StaticResource MidButtons}" Margin="25 50 50 50">
+            <Button Style="{StaticResource MidButtons}" Margin="25 50 50 50" Click="OnNavigateButtonPressed" Tag="SearchCompany">
                 <Image Source="../Assets/magnifier.png"/>
             </Button>
         </StackPanel>
