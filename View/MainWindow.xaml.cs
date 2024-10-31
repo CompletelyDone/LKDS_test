@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
 using View.Pages;
-using ViewModel;
 
 namespace View
 {
@@ -15,8 +14,6 @@ namespace View
         {
             InitializeComponent();
             navigationService = MainWindowFrame.NavigationService;
-
-            this.DataContext = new MainWindowVM();
 
             var menuPage = new MenuPage();
             navigationService.Navigate(menuPage);
