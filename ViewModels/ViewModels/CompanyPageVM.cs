@@ -11,7 +11,7 @@ namespace ViewModels.ViewModels
         private readonly ICompanyRepository companyRepository;
         private readonly IDialogService dialogService;
         private readonly INavigationService navigationService;
-        private Company? currentCompany;
+        private Company currentCompany;
         public CompanyPageVM
             (ICompanyRepository companyRepository, IDialogService dialogService, INavigationService navigationService, Company? company)
         {
@@ -21,9 +21,9 @@ namespace ViewModels.ViewModels
             currentCompany = company ?? new Company(Guid.Empty, string.Empty);
             Title = currentCompany.Title;
 
-            SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
-            DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
-            CancelCommand = new RelayCommand(GoBack);
+            SaveCommand = new RelayCommand<object>(async _ => await SaveAsync(), CanSave);
+            DeleteCommand = new RelayCommand<object>(async _ => await DeleteAsync(), CanDelete);
+            CancelCommand = new RelayCommand<object>(_ => GoBack());
         }
         private string title = string.Empty;
         public string Title
@@ -63,13 +63,14 @@ namespace ViewModels.ViewModels
                 {
                     currentCompany.Id = Guid.NewGuid();
                     await companyRepository.CreateAsync(currentCompany);
+                    dialogService.ShowMessage("Компания успешно создана!");
+                    navigationService.GoBack();
                 }
                 else
                 {
                     await companyRepository.UpdateAsync(currentCompany);
+                    dialogService.ShowMessage("Компания успешно изменена!");
                 }
-                
-                dialogService.ShowMessage("Компания успешно сохранена!");
             }
             catch (Exception ex)
             {

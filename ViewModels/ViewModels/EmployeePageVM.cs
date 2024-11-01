@@ -11,7 +11,7 @@ namespace ViewModels.ViewModels
         private readonly IEmployeeRepository employeeRepository;
         private readonly ICompanyRepository companyRepository;
         private readonly IDialogService dialogService;
-        private Employee? currentEmployee;
+        private Employee currentEmployee;
         public EmployeePageVM
             (IEmployeeRepository employeeRepository, ICompanyRepository companyRepository, IDialogService dialogService, Employee? employee)
         {
@@ -26,8 +26,8 @@ namespace ViewModels.ViewModels
             Patronymic = currentEmployee.Patronymic;
             SelectedCompanyId = currentEmployee.CompanyId;
 
-            SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
-            DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
+            SaveCommand = new RelayCommand<object>(async _ => await SaveAsync(), CanSave);
+            DeleteCommand = new RelayCommand<object>(async _ => await DeleteAsync(), CanDelete);
         }
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }

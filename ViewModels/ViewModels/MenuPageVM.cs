@@ -14,7 +14,7 @@ namespace ViewModels.ViewModels
             this.dataService = dataService;
             this.dialogService = dialogService;
             this.dialogService = dialogService;
-            CreateRandomCommand = new RelayCommand(async () => await CreateRandomAsync());
+            CreateRandomCommand = new RelayCommand<object>(async _ => await CreateRandomAsync());
             this.dataService = dataService;
         }
         public ICommand CreateRandomCommand { get; }
