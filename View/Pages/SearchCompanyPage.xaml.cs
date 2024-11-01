@@ -1,8 +1,6 @@
 ﻿using Data.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Navigation;
 using ViewModels.Abstractions;
 using ViewModels.ViewModels;
 
@@ -24,11 +22,6 @@ namespace View.Pages
             var companyRepository = serviceProvider.GetRequiredService<ICompanyRepository>();
 
             DataContext = new SearchCompanyPageVM(companyRepository, navigationService);
-        }
-        private void AddCompany(object sender, RoutedEventArgs e)
-        {
-            var addCompanyPage = new CompanyPage(serviceProvider, navigationService);
-            NavigationService.Navigate(addCompanyPage);
         }
     }
 }

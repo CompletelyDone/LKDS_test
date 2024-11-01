@@ -13,7 +13,7 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox x:Name="SearchTextBox" Width="200"/>
                 <Button Content="Поиск" />
-                <Button Content="Добавить сотрудника" Click="AddEmployee"/>
+                <Button Content="Добавить сотрудника" Command="{Binding AddEmployeeCommand}" CommandParameter="{Binding}"/>
             </StackPanel>
             <DataGrid x:Name="EmployeeDataGrid" AutoGenerateColumns="False">
                 <DataGrid.Columns>
@@ -24,9 +24,9 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Фамилия" Binding="{Binding FullName}"/>
-                    <DataGridTextColumn Header="Имя" Binding="{Binding Position}"/>
-                    <DataGridTextColumn Header="Отчество" Binding="{Binding Organization}"/>
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}"/>
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}"/>
                     <DataGridTextColumn Header="Организация" Binding="{Binding Company.Title}"/>
                     <DataGridTemplateColumn Header="Действия">
                         <DataGridTemplateColumn.CellTemplate>

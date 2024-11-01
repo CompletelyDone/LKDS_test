@@ -17,8 +17,8 @@ namespace ViewModels.ViewModels
             this.navigationService = navigationService;
             LoadCompaniesAsync();
             SearchCommand = new RelayCommand<object>(async _ => await SearchAsync());
-            AddCompanyCommand = new RelayCommand<object>(async _ => await AddCompanyAsync());
-            EditCompanyCommand = new RelayCommand<Company>(async company => await EditCompanyAsync(company));
+            AddCompanyCommand = new RelayCommand(AddCompanyAsync);
+            EditCompanyCommand = new RelayCommand<Company>(company => EditCompanyAsync(company));
             DeleteCompanyCommand = new RelayCommand<Company>(async company => await DeleteCompanyAsync(company));
         }
         public ICommand SearchCommand { get; }
@@ -38,7 +38,7 @@ namespace ViewModels.ViewModels
                 }
             }
         }
-        private ObservableCollection<Company> companies;
+        private ObservableCollection<Company> companies = [];
         public ObservableCollection<Company> Companies
         {
             get => companies;
@@ -53,7 +53,7 @@ namespace ViewModels.ViewModels
             var allCompanies = await companyRepository.GetAllAsync();
             Companies = new ObservableCollection<Company>(allCompanies);
         }
-        private async Task AddCompanyAsync()
+        private void AddCompanyAsync()
         {
             navigationService.NavigateTo<CompanyPageVM>();
         }

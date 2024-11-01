@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using Data.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
+using System.Windows;
 using System.Windows.Controls;
 using ViewModels.Abstractions;
+using ViewModels.ViewModels;
 
 namespace View.Pages
 {
@@ -16,6 +19,10 @@ namespace View.Pages
             InitializeComponent();
             this.serviceProvider = serviceProvider;
             this.navigationService = navigationService;
+
+            var employeeRepository = serviceProvider.GetRequiredService<IEmployeeRepository>();
+
+            DataContext = new SearchEmployeePageVM(employeeRepository, navigationService);
         }
 
         private void AddEmployee(object sender, RoutedEventArgs e)

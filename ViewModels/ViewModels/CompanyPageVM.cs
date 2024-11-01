@@ -23,7 +23,7 @@ namespace ViewModels.ViewModels
 
             SaveCommand = new RelayCommand<object>(async _ => await SaveAsync(), CanSave);
             DeleteCommand = new RelayCommand<object>(async _ => await DeleteAsync(), CanDelete);
-            CancelCommand = new RelayCommand<object>(_ => GoBack());
+            CancelCommand = new RelayCommand(GoBack);
         }
         private string title = string.Empty;
         public string Title
@@ -41,15 +41,9 @@ namespace ViewModels.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
         public ICommand CancelCommand { get; }
-        private bool CanSave()
-        {
-            return !string.IsNullOrWhiteSpace(Title);
-        }
-        private bool CanDelete()
-        {
-            return currentCompany != null && currentCompany.Id != Guid.Empty;
-        }
-        private async Task GoBack()
+        private bool CanSave() => !string.IsNullOrWhiteSpace(Title);
+        private bool CanDelete() => currentCompany != null && currentCompany.Id != Guid.Empty;
+        private void GoBack()
         {
             navigationService.GoBack();
         }
