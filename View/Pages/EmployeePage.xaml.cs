@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -12,7 +13,7 @@ namespace View.Pages
     public partial class EmployeePage : Page
     {
         private readonly INavigationService navigationService;
-        public EmployeePage(IServiceProvider serviceProvider, INavigationService navigationService)
+        public EmployeePage(IServiceProvider serviceProvider, INavigationService navigationService, Employee? employee = null)
         {
             InitializeComponent();
             this.navigationService = navigationService;
