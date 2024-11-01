@@ -18,5 +18,6 @@
         public string? Patronymic { get; set; }
         public string? PhotoPath { get; set; }
         public Guid? CompanyId { get; set; }
+        public virtual Company? Company { get; set; }
     }
 }

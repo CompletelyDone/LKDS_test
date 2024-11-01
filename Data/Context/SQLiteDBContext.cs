@@ -41,7 +41,7 @@ namespace Data.Context
                 entity.Property(e => e.PhotoPath)
                       .HasMaxLength(255); 
 
-                entity.HasOne<Company>()
+                entity.HasOne(e => e.Company)
                       .WithMany(c => c.Employees)
                       .HasForeignKey(e => e.CompanyId)
                       .OnDelete(DeleteBehavior.Cascade); 
