@@ -23,7 +23,7 @@ namespace View.Pages
 
             var companyRepository = serviceProvider.GetRequiredService<ICompanyRepository>();
 
-            DataContext = new SearchCompanyPageVM(companyRepository);
+            DataContext = new SearchCompanyPageVM(companyRepository, navigationService);
         }
         private void AddCompany(object sender, RoutedEventArgs e)
         {

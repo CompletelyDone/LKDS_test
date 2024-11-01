@@ -16,7 +16,7 @@ namespace View
             InitializeComponent();
             navigationService = MainWindowFrame.NavigationService;
 
-            var navigator = new Navigator(MainWindowFrame);
+            var navigator = new Navigator(serviceProvider, MainWindowFrame);
 
             var menuPage = new MenuPage(serviceProvider, navigator);
             navigationService.Navigate(menuPage);

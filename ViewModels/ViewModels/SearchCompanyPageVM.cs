@@ -2,6 +2,7 @@
 using Model;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using ViewModels.Abstractions;
 using ViewModels.Base;
 
 namespace ViewModels.ViewModels
@@ -9,12 +10,15 @@ namespace ViewModels.ViewModels
     public class SearchCompanyPageVM : ViewModelBase
     {
         private readonly ICompanyRepository companyRepository;
-
-        public SearchCompanyPageVM(ICompanyRepository companyRepository)
+        private readonly INavigationService navigationService;
+        public SearchCompanyPageVM(ICompanyRepository companyRepository, INavigationService navigationService)
         {
             this.companyRepository = companyRepository;
+            this.navigationService = navigationService;
             LoadCompaniesAsync();
             SearchCommand = new RelayCommand<object>(async _ => await SearchAsync());
+            AddCompanyCommand = new RelayCommand<object>(async _ => await AddCompanyAsync());
+            EditCompanyCommand = new RelayCommand<Company>(async company => await EditCompanyAsync(company));
             DeleteCompanyCommand = new RelayCommand<Company>(async company => await DeleteCompanyAsync(company));
         }
         public ICommand SearchCommand { get; }
@@ -49,6 +53,14 @@ namespace ViewModels.ViewModels
             var allCompanies = await companyRepository.GetAllAsync();
             Companies = new ObservableCollection<Company>(allCompanies);
         }
+        private async Task AddCompanyAsync()
+        {
+            navigationService.NavigateTo<CompanyPageVM>();
+        }
+        private async Task EditCompanyAsync(Company company)
+        {
+            navigationService.NavigateTo<CompanyPageVM>(company);
+        }
         private async Task SearchAsync()
         {
             if (string.IsNullOrWhiteSpace(SearchText))
@@ -72,6 +84,5 @@ namespace ViewModels.ViewModels
                 await LoadCompaniesAsync();
             }
         }
-
     }
 }

@@ -13,7 +13,7 @@
             <StackPanel Orientation="Horizontal">
                 <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
                 <Button Content="Поиск" Command="{Binding SearchCommand}" CommandParameter="{Binding}"/>
-                <Button Content="Добавить компанию" Click="AddCompany"/>
+                <Button Content="Добавить компанию" Command="{Binding AddCompanyCommand}" CommandParameter="{Binding}"/>
             </StackPanel>
             <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Companies}">
                 <DataGrid.Columns>
@@ -22,7 +22,7 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="Редактировать"/>
+                                    <Button Content="Редактировать" Command="{Binding DataContext.EditCompanyCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
                                     <Button Content="Удалить" Command="{Binding DataContext.DeleteCompanyCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
                                 </StackPanel>
                             </DataTemplate>
