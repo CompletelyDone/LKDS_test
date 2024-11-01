@@ -65,7 +65,6 @@ namespace Data.Repositories
             try
             {
                 employees = await context.Employees
-                   .AsNoTracking()
                    .ToListAsync();
                 Log.Information($"Успешно извлечено {employees.Count} сотрудников.");
             }
@@ -102,7 +101,7 @@ namespace Data.Repositories
                         .SetProperty(emp => emp.LastName, employee.LastName)
                         .SetProperty(emp => emp.Patronymic, employee.Patronymic)
                         .SetProperty(emp => emp.PhotoPath, employee.PhotoPath)
-                        .SetProperty(emp => emp.Company, employee.Company));
+                        .SetProperty(emp => emp.CompanyId, employee.CompanyId));
                 Log.Information($"Успешно обновлен сотрудник {employee.Id}.");
             }
             catch (Exception ex)

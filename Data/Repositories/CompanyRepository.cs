@@ -36,7 +36,6 @@ namespace Data.Repositories
             try
             {
                 companies = await context.Companies
-                    .AsNoTracking()
                     .ToListAsync();
                 Log.Information($"Успешно извлечено {companies.Count} организаций.");
             }

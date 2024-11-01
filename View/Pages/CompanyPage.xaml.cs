@@ -24,7 +24,7 @@ namespace View.Pages
         {
             if (currentCompany == null)
             {
-                var (newCompany, error) = Company.Create(Guid.NewGuid(), TitleTextBox.Text);
+                var newCompany = new Company(Guid.NewGuid(), TitleTextBox.Text);
             }
             else
             {
