@@ -1,6 +1,6 @@
-﻿using ViewModel.Services;
+﻿using ViewModels.Services;
 
-namespace ViewModel
+namespace ViewModels
 {
     public class MainWindowVM
     {

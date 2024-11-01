@@ -4,8 +4,8 @@ using Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System.Windows;
-using ViewModel;
-using ViewModel.Services;
+using ViewModels;
+using ViewModels.Services;
 
 namespace View
 {
