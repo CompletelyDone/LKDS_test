@@ -9,13 +9,15 @@ namespace View.Pages
     /// </summary>
     public partial class SearchCompanyPage : Page
     {
-        public SearchCompanyPage()
+        private readonly IServiceProvider serviceProvider;
+        public SearchCompanyPage(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            this.serviceProvider = serviceProvider;
         }
         private void AddCompany(object sender, RoutedEventArgs e)
         {
-            var addCompanyPage = new CompanyPage();
+            var addCompanyPage = new CompanyPage(serviceProvider);
             NavigationService.Navigate(addCompanyPage);
         }
     }

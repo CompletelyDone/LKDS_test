@@ -35,10 +35,6 @@ namespace ViewModels.Services
                 companies.Add(company);
             }
             await companyRepository.CreateRangeAsync(companies);
-            foreach (var company in companies)
-            {
-                await employeeRepository.CreateRangeAsync(company.Employees);
-            }
         }
         private string GetStringWithRandom(string str, Random random)
         {

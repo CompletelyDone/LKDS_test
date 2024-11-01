@@ -2,6 +2,7 @@
 {
     public class Employee
     {
+        public Employee() { }
         public Employee(Guid id, string lastname, string firstname, string? patronymic, string? photo, Guid? companyId)
         {
             Id = id;

@@ -4,8 +4,10 @@ using Data.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System.Windows;
-using ViewModels;
+using View.Utils;
+using ViewModels.Abstractions;
 using ViewModels.Services;
+using ViewModels.ViewModels;
 
 namespace View
 {
@@ -30,6 +32,7 @@ namespace View
             {
                 var services = new ServiceCollection();
                 services.AddSingleton<SQLiteDBContext>();
+                services.AddSingleton<IDialogService, DialogService>();
                 services.AddScoped<IEmployeeRepository, EmployeeRepository>();
                 services.AddScoped<ICompanyRepository, CompanyRepository>();
                 services.AddScoped<DataService>();
@@ -39,7 +42,7 @@ namespace View
 
                 Log.Information("Все сервисы успешно загружены.");
 
-                var mainWindow = new MainWindow()
+                var mainWindow = new MainWindow(serviceProvider)
                 {
                     DataContext = serviceProvider?.GetService<MainWindowVM>()
                 };

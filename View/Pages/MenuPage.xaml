@@ -54,6 +54,6 @@
 
         <Button Grid.ColumnSpan="2" Grid.Row="2" 
                 Content="Добавить 10 организаций со 100 сотрудниками в каждой" 
-                FontSize="18"/>
+                FontSize="18" Command="{Binding CreateRandomCommand}"/>
     </Grid>
 </Page>

@@ -10,7 +10,7 @@ namespace View.Pages
     /// </summary>
     public partial class EmployeePage : Page
     {
-        public EmployeePage()
+        public EmployeePage(IServiceProvider serviceProvider)
         {
             InitializeComponent();
         }

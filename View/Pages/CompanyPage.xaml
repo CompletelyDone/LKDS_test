@@ -13,8 +13,8 @@
             <TextBlock Text="Название компании:" FontWeight="Bold" Margin="0,0,0,10"/>
             <TextBox x:Name="TitleTextBox" Width="300"/>
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                <Button Content="Сохранить" Click="SaveButtonPressed" Width="100" Margin="0,0,10,0"/>
-                <Button x:Name="DeleteButton" Content="Удалить" Click="DeleteButtonPressed" Width="100" Margin="0,0,10,0" IsEnabled="False"/>
+                <Button Content="Сохранить" Command="{Binding SaveButton}" Width="100" Margin="0,0,10,0"/>
+                <Button Content="Удалить" Command="{Binding DeleteButton}" Width="100" Margin="0,0,10,0" IsEnabled="False"/>
                 <Button Content="Отмена" Click="CancelButtonPressed" Width="100"/>
             </StackPanel>
         </StackPanel>

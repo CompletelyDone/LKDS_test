@@ -8,14 +8,16 @@ namespace View.Pages
     /// </summary>
     public partial class SearchEmployeePage : Page
     {
-        public SearchEmployeePage()
+        private readonly IServiceProvider serviceProvider;
+        public SearchEmployeePage(IServiceProvider serviceProvider)
         {
             InitializeComponent();
+            this.serviceProvider = serviceProvider;
         }
 
         private void AddEmployee(object sender, RoutedEventArgs e)
         {
-            var addEmployeePage = new EmployeePage();
+            var addEmployeePage = new EmployeePage(serviceProvider);
             NavigationService.Navigate(addEmployeePage);
         }
     }

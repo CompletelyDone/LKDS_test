@@ -10,12 +10,12 @@ namespace View
     public partial class MainWindow : Window
     {
         private NavigationService navigationService;
-        public MainWindow()
+        public MainWindow(IServiceProvider serviceProvider)
         {
             InitializeComponent();
             navigationService = MainWindowFrame.NavigationService;
 
-            var menuPage = new MenuPage();
+            var menuPage = new MenuPage(serviceProvider);
             navigationService.Navigate(menuPage);
         }
     }
