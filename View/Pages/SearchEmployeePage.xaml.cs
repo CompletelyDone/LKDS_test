@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using ViewModels.Abstractions;
 
 namespace View.Pages
 {
@@ -9,15 +10,17 @@ namespace View.Pages
     public partial class SearchEmployeePage : Page
     {
         private readonly IServiceProvider serviceProvider;
-        public SearchEmployeePage(IServiceProvider serviceProvider)
+        private readonly INavigationService navigationService;
+        public SearchEmployeePage(IServiceProvider serviceProvider, INavigationService navigationService)
         {
             InitializeComponent();
             this.serviceProvider = serviceProvider;
+            this.navigationService = navigationService;
         }
 
         private void AddEmployee(object sender, RoutedEventArgs e)
         {
-            var addEmployeePage = new EmployeePage(serviceProvider);
+            var addEmployeePage = new EmployeePage(serviceProvider, navigationService);
             NavigationService.Navigate(addEmployeePage);
         }
     }

@@ -28,6 +28,7 @@ namespace View
                 .CreateLogger();
 
             Log.Information("Приложение запущено");
+
             try
             {
                 var services = new ServiceCollection();

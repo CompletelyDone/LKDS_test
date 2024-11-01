@@ -10,16 +10,20 @@ namespace ViewModels.ViewModels
     {
         private readonly ICompanyRepository companyRepository;
         private readonly IDialogService dialogService;
+        private readonly INavigationService navigationService;
         private Company? currentCompany;
-        public CompanyPageVM(ICompanyRepository companyRepository, IDialogService dialogService, Company? company)
+        public CompanyPageVM
+            (ICompanyRepository companyRepository, IDialogService dialogService, INavigationService navigationService, Company? company)
         {
             this.companyRepository = companyRepository;
             this.dialogService = dialogService;
+            this.navigationService = navigationService;
             currentCompany = company ?? new Company(Guid.Empty, string.Empty);
             Title = currentCompany.Title;
 
             SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
             DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
+            CancelCommand = new RelayCommand(GoBack);
         }
         private string title = string.Empty;
         public string Title
@@ -36,6 +40,7 @@ namespace ViewModels.ViewModels
         }
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ICommand CancelCommand { get; }
         private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(Title);
@@ -43,6 +48,10 @@ namespace ViewModels.ViewModels
         private bool CanDelete()
         {
             return currentCompany != null && currentCompany.Id != Guid.Empty;
+        }
+        private async Task GoBack()
+        {
+            navigationService.GoBack();
         }
         private async Task SaveAsync()
         {

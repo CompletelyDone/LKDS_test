@@ -12,10 +12,12 @@ namespace View.Pages
     public partial class MenuPage : Page
     {
         private readonly IServiceProvider serviceProvider;
-        public MenuPage(IServiceProvider serviceProvider)
+        private readonly INavigationService navigationService;
+        public MenuPage(IServiceProvider serviceProvider, INavigationService navigationService)
         {
             InitializeComponent();
             this.serviceProvider = serviceProvider;
+            this.navigationService = navigationService;
             var dataService = serviceProvider.GetRequiredService<DataService>();
             var dialogService = serviceProvider.GetRequiredService<IDialogService>();
             DataContext = new MenuPageVM(dataService, dialogService);
@@ -30,19 +32,19 @@ namespace View.Pages
                 switch (buttonTag)
                 {
                     case "AddEmployee":
-                        var employeePage = new EmployeePage(serviceProvider);
+                        var employeePage = new EmployeePage(serviceProvider, navigationService);
                         NavigationService.Navigate(employeePage);
                         break;
                     case "SearchEmployee":
-                        var searchEmployeePage = new SearchEmployeePage(serviceProvider);
+                        var searchEmployeePage = new SearchEmployeePage(serviceProvider, navigationService);
                         NavigationService.Navigate(searchEmployeePage);
                         break;
                     case "AddCompany":
-                        var companyPage = new CompanyPage(serviceProvider);
+                        var companyPage = new CompanyPage(serviceProvider, navigationService);
                         NavigationService.Navigate(companyPage);
                         break;
                     case "SearchCompany":
-                        var searchCompanyPage = new SearchCompanyPage(serviceProvider);
+                        var searchCompanyPage = new SearchCompanyPage(serviceProvider, navigationService);
                         NavigationService.Navigate(searchCompanyPage);
                         break;
                 }

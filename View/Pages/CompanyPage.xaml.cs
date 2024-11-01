@@ -13,14 +13,15 @@ namespace View.Pages
     /// </summary>
     public partial class CompanyPage : Page 
     {
-        public CompanyPage(IServiceProvider serviceProvider, Company? company = null)
+        private readonly IServiceProvider serviceProvider;
+        public CompanyPage(IServiceProvider serviceProvider, INavigationService navigationService, Company? company = null)
         {
             InitializeComponent();
-
+            this.serviceProvider = serviceProvider;
             var companyRepository = serviceProvider.GetRequiredService<ICompanyRepository>();
             var dialogService = serviceProvider.GetRequiredService<IDialogService>();
 
-            DataContext = new CompanyPageVM(companyRepository, dialogService, company);
+            DataContext = new CompanyPageVM(companyRepository, dialogService, navigationService, company);
         }
         private void CancelButtonPressed(object sender, RoutedEventArgs e)
         {

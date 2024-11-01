@@ -15,7 +15,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
                 <Button Content="Сохранить" Command="{Binding SaveCommand}" IsEnabled="{Binding CanSave}" Width="100" Margin="0,0,10,0"/>
                 <Button Content="Удалить" Command="{Binding DeleteCommand}" IsEnabled="{Binding CanDelete}" Width="100" Margin="0,0,10,0"/>
-                <Button Content="Отмена" Click="CancelButtonPressed" Width="100"/>
+                <Button Content="Отмена" Command="{Binding CancelCommand}" Width="100"/>
             </StackPanel>
         </StackPanel>
     </Grid>

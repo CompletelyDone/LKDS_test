@@ -29,9 +29,6 @@ namespace ViewModels.ViewModels
             SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
             DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
         }
-
-        
-
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
         private string firstName = string.Empty;

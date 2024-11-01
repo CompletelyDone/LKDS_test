@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using ViewModels.Abstractions;
 
 namespace View.Pages
 {
@@ -10,9 +11,11 @@ namespace View.Pages
     /// </summary>
     public partial class EmployeePage : Page
     {
-        public EmployeePage(IServiceProvider serviceProvider)
+        private readonly INavigationService navigationService;
+        public EmployeePage(IServiceProvider serviceProvider, INavigationService navigationService)
         {
             InitializeComponent();
+            this.navigationService = navigationService;
         }
 
         private void EmployeePhotoMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

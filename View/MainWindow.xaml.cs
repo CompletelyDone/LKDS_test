@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Navigation;
 using View.Pages;
+using View.Utils;
 
 namespace View
 {
@@ -15,7 +16,9 @@ namespace View
             InitializeComponent();
             navigationService = MainWindowFrame.NavigationService;
 
-            var menuPage = new MenuPage(serviceProvider);
+            var navigator = new Navigator(MainWindowFrame);
+
+            var menuPage = new MenuPage(serviceProvider, navigator);
             navigationService.Navigate(menuPage);
         }
     }
