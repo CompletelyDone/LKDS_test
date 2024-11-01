@@ -5,7 +5,7 @@ using ViewModels.Services;
 
 namespace ViewModels.ViewModels
 {
-    public class MenuPageVM
+    public class MenuPageVM : ViewModelBase
     {
         private readonly DataService dataService;
         private readonly IDialogService dialogService;

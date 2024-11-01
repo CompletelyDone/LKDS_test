@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Model;
 using System.Windows;
 using System.Windows.Controls;
+using ViewModels.Abstractions;
 using ViewModels.ViewModels;
 
 namespace View.Pages
@@ -17,8 +18,9 @@ namespace View.Pages
             InitializeComponent();
 
             var companyRepository = serviceProvider.GetRequiredService<ICompanyRepository>();
+            var dialogService = serviceProvider.GetRequiredService<IDialogService>();
 
-            DataContext = new CompanyPageVM(companyRepository, company);
+            DataContext = new CompanyPageVM(companyRepository, dialogService, company);
         }
         private void CancelButtonPressed(object sender, RoutedEventArgs e)
         {

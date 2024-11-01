@@ -1,8 +1,8 @@
-﻿using ViewModels.Services;
+﻿using ViewModels.Base;
 
 namespace ViewModels.ViewModels
 {
-    public class MainWindowVM
+    public class MainWindowVM : ViewModelBase
     {
         public MainWindowVM()
         {
