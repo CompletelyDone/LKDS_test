@@ -15,7 +15,7 @@ namespace ViewModels.ViewModels
         {
             this.companyRepository = companyRepository;
             this.navigationService = navigationService;
-            LoadCompaniesAsync();
+            LoadCompaniesAsync().ConfigureAwait(false);
             SearchCommand = new RelayCommand<object>(async _ => await SearchAsync());
             AddCompanyCommand = new RelayCommand(AddCompanyAsync);
             EditCompanyCommand = new RelayCommand<Company>(company => EditCompanyAsync(company));

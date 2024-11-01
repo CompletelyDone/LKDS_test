@@ -1,4 +1,6 @@
 ﻿using Data.Abstractions;
+using Model;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ViewModels.Abstractions;
 using ViewModels.Base;
@@ -30,6 +32,21 @@ namespace ViewModels.ViewModels
                 searchText = value;
                 OnPropertyChanged();
             }
+        }
+        private ObservableCollection<Employee> employees = [];
+        public ObservableCollection<Employee> Employees
+        {
+            get => employees;
+            set
+            {
+                employees = value;
+                OnPropertyChanged();
+            }
+        }
+        private async Task LoadEmployeesAsync()
+        {
+            var employees = await employeeRepository.GetAllAsync();
+            Employees = new ObservableCollection<Employee>(employees);
         }
         private void AddEmployeeAsync()
         {
