@@ -15,12 +15,12 @@
                 <Button Content="Поиск" />
                 <Button Content="Добавить сотрудника" Command="{Binding AddEmployeeCommand}" CommandParameter="{Binding}"/>
             </StackPanel>
-            <DataGrid x:Name="EmployeeDataGrid" AutoGenerateColumns="False">
+            <DataGrid ItemsSource="{Binding Employees}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="Фото">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding PhotoUrl}" Width="50" Height="50"/>
+                                <Image Source="{Binding PhotoPath}" Width="50" Height="50"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

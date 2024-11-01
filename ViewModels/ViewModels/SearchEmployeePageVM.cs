@@ -17,6 +17,8 @@ namespace ViewModels.ViewModels
             this.employeeRepository = employeeRepository;
             this.navigationService = navigationService;
 
+            LoadEmployeesAsync().ConfigureAwait(false);
+
             AddEmployeeCommand = new RelayCommand(AddEmployeeAsync);
         }
         public ICommand SearchCommand { get; }
