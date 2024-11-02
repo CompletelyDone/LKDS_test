@@ -126,14 +126,21 @@ namespace ViewModels.ViewModels
         private bool CanDelete() => currentEmployee != null && currentEmployee.Id != Guid.Empty;
         private async Task SaveAsync()
         {
+            currentEmployee.FirstName = FirstName;
+            currentEmployee.LastName = LastName;
+            currentEmployee.Patronymic = Patronymic;
+            currentEmployee.Company = SelectedCompany;
+            currentEmployee.PhotoPath = PhotoPath;
+
+            var isValid = Employee.IsValid(currentEmployee);
+            if (isValid != string.Empty)
+            {
+                dialogService.ShowMessage(isValid);
+                return;
+            }
+
             try
             {
-                currentEmployee.FirstName = FirstName;
-                currentEmployee.LastName = LastName;
-                currentEmployee.Patronymic = Patronymic;
-                currentEmployee.Company = SelectedCompany;
-                currentEmployee.PhotoPath = PhotoPath;
-
                 if (currentEmployee.Id == Guid.Empty)
                 {
                     currentEmployee.Id = Guid.NewGuid();

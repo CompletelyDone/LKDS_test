@@ -24,7 +24,7 @@ namespace Data.Context
                 entity.HasKey(c => c.Id); 
                 entity.Property(c => c.Title)
                       .IsRequired() 
-                      .HasMaxLength(100); 
+                      .HasMaxLength(Company.MAX_TITLE_LENGTH); 
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -32,12 +32,12 @@ namespace Data.Context
                 entity.HasKey(e => e.Id); 
                 entity.Property(e => e.LastName)
                       .IsRequired() 
-                      .HasMaxLength(50);
+                      .HasMaxLength(Employee.MAX_FIELD_LENGTH);
                 entity.Property(e => e.FirstName)
                       .IsRequired() 
-                      .HasMaxLength(50); 
+                      .HasMaxLength(Employee.MAX_FIELD_LENGTH); 
                 entity.Property(e => e.Patronymic)
-                      .HasMaxLength(50); 
+                      .HasMaxLength(Employee.MAX_FIELD_LENGTH); 
                 entity.Property(e => e.PhotoPath)
                       .HasMaxLength(255); 
 

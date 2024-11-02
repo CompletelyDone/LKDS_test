@@ -49,10 +49,15 @@ namespace ViewModels.ViewModels
         }
         private async Task SaveAsync()
         {
+            currentCompany.Title = Title;
+            var isValid = Company.IsValid(currentCompany);
+            if (isValid != string.Empty)
+            {
+                dialogService.ShowMessage(isValid);
+                return;
+            }
             try
             {
-                currentCompany.Title = Title;
-
                 if (currentCompany.Id == Guid.Empty)
                 {
                     currentCompany.Id = Guid.NewGuid();
