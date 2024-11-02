@@ -50,8 +50,11 @@ namespace ViewModels.ViewModels
         }
         private async Task LoadEmployeesAsync()
         {
-            var employees = await employeeRepository.GetAllAsync();
-            Employees = new ObservableCollection<Employee>(employees);
+            await Task.Run(async () =>
+            {
+                var employees = await employeeRepository.GetAllAsync();
+                Employees = new ObservableCollection<Employee>(employees);
+            });
         }
         private async Task SearchEmployeeAsync()
         {

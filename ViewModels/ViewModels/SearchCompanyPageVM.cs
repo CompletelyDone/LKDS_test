@@ -50,8 +50,11 @@ namespace ViewModels.ViewModels
         }
         private async Task LoadCompaniesAsync()
         {
-            var allCompanies = await companyRepository.GetAllAsync();
-            Companies = new ObservableCollection<Company>(allCompanies);
+            await Task.Run(async () =>
+            {
+                var allCompanies = await companyRepository.GetAllAsync();
+                Companies = new ObservableCollection<Company>(allCompanies);
+            });
         }
         private void AddCompany()
         {
