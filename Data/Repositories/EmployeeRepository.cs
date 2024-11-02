@@ -65,6 +65,7 @@ namespace Data.Repositories
             try
             {
                 employees = await context.Employees
+                   .Include(emp => emp.Company)
                    .ToListAsync();
                 Log.Information($"Успешно извлечено {employees.Count} сотрудников.");
             }

@@ -10,26 +10,29 @@
 
     <Grid>
         <StackPanel Margin="10">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" Height="20">
                 <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
                 <Button Content="Поиск" Command="{Binding SearchCommand}" CommandParameter="{Binding}"/>
                 <Button Content="Добавить компанию" Command="{Binding AddCompanyCommand}" CommandParameter="{Binding}"/>
             </StackPanel>
-            <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Companies}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Название" Binding="{Binding Title}"/>
-                    <DataGridTemplateColumn Header="Действия">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <Button Content="Редактировать" Command="{Binding DataContext.EditCompanyCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
-                                    <Button Content="Удалить" Command="{Binding DataContext.DeleteCompanyCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Companies}" Height="500">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Название" Binding="{Binding Title}"/>
+                        <DataGridTemplateColumn Header="Действия">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="Редактировать" Command="{Binding DataContext.EditCompanyCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+                                        <Button Content="Удалить" Command="{Binding DataContext.DeleteCompanyCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Page>
