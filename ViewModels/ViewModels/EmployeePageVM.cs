@@ -15,9 +15,9 @@ namespace ViewModels.ViewModels
         private readonly INavigationService navigationService;
         private Employee currentEmployee;
         public EmployeePageVM(
-            IEmployeeRepository employeeRepository, 
-            ICompanyRepository companyRepository, 
-            IDialogService dialogService, 
+            IEmployeeRepository employeeRepository,
+            ICompanyRepository companyRepository,
+            IDialogService dialogService,
             INavigationService navigationService,
             Employee? employee)
         {
@@ -36,10 +36,12 @@ namespace ViewModels.ViewModels
 
             SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
             DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
+            CancelCommand = new RelayCommand(Cancel);
         }
         public ObservableCollection<Company> Companies { get; } = [];
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ICommand CancelCommand { get; }
         private string firstName = string.Empty;
         public string FirstName
         {
@@ -101,12 +103,16 @@ namespace ViewModels.ViewModels
                 Companies.Add(company);
             }
         }
+        private void Cancel()
+        {
+            navigationService.NavigateTo<MenuPageVM>();
+        }
         private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(FirstName) &&
                    !string.IsNullOrWhiteSpace(LastName);
         }
-        private bool CanDelete() => currentEmployee != null && currentEmployee.Id != Guid.Empty;        
+        private bool CanDelete() => currentEmployee != null && currentEmployee.Id != Guid.Empty;
         private async Task SaveAsync()
         {
             try
@@ -118,9 +124,10 @@ namespace ViewModels.ViewModels
 
                 if (currentEmployee.Id == Guid.Empty)
                 {
+                    currentEmployee.Id = Guid.NewGuid();
                     await employeeRepository.CreateAsync(currentEmployee);
                     dialogService.ShowMessage("Сотрудник успешно создан!");
-                    navigationService.GoBack();
+                    navigationService.NavigateTo<MenuPageVM>();
                 }
                 else
                 {
@@ -137,8 +144,15 @@ namespace ViewModels.ViewModels
         {
             if (currentEmployee.Id != Guid.Empty)
             {
-                await employeeRepository.DeleteAsync(currentEmployee.Id);
-                dialogService.ShowMessage("Сотрудник успешно удален!");
+                try
+                {
+                    await employeeRepository.DeleteAsync(currentEmployee.Id);
+                    dialogService.ShowMessage("Сотрудник успешно удален!");
+                }
+                catch (Exception ex)
+                {
+                    dialogService.ShowMessage(ex.Message);
+                }
             }
         }
     }

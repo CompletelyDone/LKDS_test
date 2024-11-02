@@ -97,6 +97,7 @@ namespace Data.Repositories
             try
             {
                 await context.Employees
+                    .Where(e=>e.Id == employee.Id)
                     .ExecuteUpdateAsync(s => s
                         .SetProperty(emp => emp.FirstName, employee.FirstName)
                         .SetProperty(emp => emp.LastName, employee.LastName)
@@ -116,7 +117,7 @@ namespace Data.Repositories
             List<Employee> possibleEmployee = [];
             try
             {
-                var employees = await context.Employees
+                possibleEmployee = await context.Employees
                     .Where(e => e.LastName.Contains(field) ||
                                 e.FirstName.Contains(field) ||
                                 (e.Patronymic != null && e.Patronymic.Contains(field)))

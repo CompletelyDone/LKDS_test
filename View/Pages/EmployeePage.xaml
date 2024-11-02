@@ -70,7 +70,8 @@
                         Command="{Binding SaveCommand}" CommandParameter="{Binding}" Style="{StaticResource Buttons}"/>
                 <Button Content="Удалить" IsEnabled="{Binding CanDelete}"
                         Command="{Binding DeleteCommand}" CommandParameter="{Binding}" Style="{StaticResource Buttons}"/>
-                <Button Content="Отмена" Click="CancelButtonPressed" Style="{StaticResource Buttons}"/>
+                <Button Content="Отмена" Command="{Binding CancelCommand}" CommandParameter="{Binding}"
+                        Style="{StaticResource Buttons}"/>
             </StackPanel>
         </Grid>
     </Grid>

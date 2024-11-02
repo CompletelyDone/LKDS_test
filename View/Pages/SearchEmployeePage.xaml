@@ -11,13 +11,13 @@
     <Grid>
         <StackPanel Margin="10">
             <StackPanel Orientation="Horizontal" Height="20">
-                <TextBox x:Name="SearchTextBox" Width="200"/>
-                <Button Content="Поиск" />
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+                <Button Content="Поиск" Command="{Binding SearchCommand}" CommandParameter="{Binding}"/>
                 <Button Content="Добавить сотрудника" Command="{Binding AddEmployeeCommand}" CommandParameter="{Binding}"/>
             </StackPanel>
 
             <ScrollViewer VerticalScrollBarVisibility="Auto">
-                <DataGrid ItemsSource="{Binding Employees}" AutoGenerateColumns="False" Height="500">
+                <DataGrid ItemsSource="{Binding Employees}" IsReadOnly="True" AutoGenerateColumns="False" Height="500">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Фото">
                             <DataGridTemplateColumn.CellTemplate>
@@ -34,8 +34,10 @@
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="Редактировать"/>
-                                        <Button Content="Удалить" />
+                                        <Button Content="Редактировать" CommandParameter="{Binding}"
+                                                Command="{Binding DataContext.EditEmployeeCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>
+                                        <Button Content="Удалить" CommandParameter="{Binding}"
+                                                Command="{Binding DataContext.DeleteEmployeeCommand, RelativeSource={RelativeSource AncestorType=Page}}"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>

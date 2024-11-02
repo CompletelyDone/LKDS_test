@@ -19,14 +19,17 @@ namespace ViewModels.ViewModels
 
             LoadEmployeesAsync().ConfigureAwait(false);
 
-            AddEmployeeCommand = new RelayCommand(AddEmployeeAsync);
+            SearchCommand = new RelayCommand<object>(async _ => await SearchEmployeeAsync());
+            AddEmployeeCommand = new RelayCommand(AddEmployee);
+            EditEmployeeCommand = new RelayCommand<Employee>(EditEmployeeAsync);
+            DeleteEmployeeCommand = new RelayCommand<Employee>(DeleteEmployeeAsync);
         }
         public ICommand SearchCommand { get; }
         public ICommand AddEmployeeCommand { get; }
         public ICommand EditEmployeeCommand { get; }
         public ICommand DeleteEmployeeCommand { get; }
-        private string searchText;
-        private string SearchText
+        private string searchText = string.Empty;
+        public string SearchText
         {
             get => searchText;
             set
@@ -50,9 +53,32 @@ namespace ViewModels.ViewModels
             var employees = await employeeRepository.GetAllAsync();
             Employees = new ObservableCollection<Employee>(employees);
         }
-        private void AddEmployeeAsync()
+        private async Task SearchEmployeeAsync()
+        {
+            if(!string.IsNullOrEmpty(SearchText))
+            {
+                var employees = await employeeRepository.SearchEmployeeByFieldAsync(searchText);
+                Employees = new ObservableCollection<Employee>(employees);
+            }
+        }
+        private void AddEmployee()
         {
             navigationService.NavigateTo<EmployeePageVM>();
+        }
+        private async Task EditEmployeeAsync(Employee employee)
+        {
+            if (await employeeRepository.GetByIdAsync(employee.Id) != null)
+            {
+                navigationService.NavigateTo<EmployeePageVM>(employee);
+            }
+        }
+        private async Task DeleteEmployeeAsync(Employee employee)
+        {
+            if(employee != null)
+            {
+                await employeeRepository.DeleteAsync(employee.Id);
+                await LoadEmployeesAsync();
+            }
         }
     }
 }

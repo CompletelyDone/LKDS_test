@@ -45,6 +45,8 @@ namespace View.Utils
         {
             switch (viewModelType.Name)
             {
+                case nameof(MenuPageVM):
+                    return new MenuPage(serviceProvider, this);
                 case nameof(CompanyPageVM):
                     return new CompanyPage(serviceProvider, this, (Company)parameter);
                 case nameof(EmployeePageVM):

@@ -41,9 +41,5 @@ namespace View.Pages
 
             }
         }
-        private void CancelButtonPressed(object sender, RoutedEventArgs e)
-        {
-            if (NavigationService.CanGoBack) NavigationService.GoBack();
-        }
     }
 }

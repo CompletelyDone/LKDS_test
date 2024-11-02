@@ -23,7 +23,7 @@ namespace ViewModels.ViewModels
 
             SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
             DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
-            CancelCommand = new RelayCommand(GoBack);
+            CancelCommand = new RelayCommand(Cancel);
         }
         private string title = string.Empty;
         public string Title
@@ -43,9 +43,9 @@ namespace ViewModels.ViewModels
         public ICommand CancelCommand { get; }
         private bool CanSave() => !string.IsNullOrWhiteSpace(Title);
         private bool CanDelete() => currentCompany != null && currentCompany.Id != Guid.Empty;
-        private void GoBack()
+        private void Cancel()
         {
-            navigationService.GoBack();
+            navigationService.NavigateTo<MenuPageVM>();
         }
         private async Task SaveAsync()
         {
@@ -58,7 +58,7 @@ namespace ViewModels.ViewModels
                     currentCompany.Id = Guid.NewGuid();
                     await companyRepository.CreateAsync(currentCompany);
                     dialogService.ShowMessage("Компания успешно создана!");
-                    navigationService.GoBack();
+                    navigationService.NavigateTo<MenuPageVM>();
                 }
                 else
                 {
