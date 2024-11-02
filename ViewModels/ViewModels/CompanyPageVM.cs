@@ -1,5 +1,6 @@
 ﻿using Data.Abstractions;
 using Model;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ViewModels.Abstractions;
 using ViewModels.Base;
@@ -18,6 +19,10 @@ namespace ViewModels.ViewModels
             this.companyRepository = companyRepository;
             this.dialogService = dialogService;
             this.navigationService = navigationService;
+            if (company != null)
+            {
+                Employees = new ObservableCollection<Employee>(company.Employees);
+            }
             currentCompany = company ?? new Company(Guid.Empty, string.Empty);
             Title = currentCompany.Title;
 
@@ -41,6 +46,7 @@ namespace ViewModels.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
         public ICommand CancelCommand { get; }
+        public ObservableCollection<Employee> Employees { get; } = [];
         private bool CanSave() => !string.IsNullOrWhiteSpace(Title);
         private bool CanDelete() => currentCompany != null && currentCompany.Id != Guid.Empty;
         private void Cancel()

@@ -19,7 +19,7 @@
             <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <DataGrid AutoGenerateColumns="False" IsReadOnly="True" ItemsSource="{Binding Companies}" Height="500">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Название" Binding="{Binding Title}"/>
+                        <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*"/>
                         <DataGridTemplateColumn Header="Действия">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

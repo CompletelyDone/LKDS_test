@@ -8,17 +8,30 @@
       d:DesignHeight="550" d:DesignWidth="800"
       Title="Организация">
 
-    <Grid>
-        <StackPanel Margin="20">
-            <TextBlock Text="Название компании:" FontWeight="Bold" Margin="0,0,0,10"/>
-            <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
-            <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
-                <Button Content="Сохранить" Width="100" Margin="0,0,10,0"
+    <Grid Background="White">
+        <StackPanel Margin="20" Height="510">
+            <StackPanel Orientation="Horizontal" Height="20">
+                <TextBlock Text="Название компании:" FontWeight="Bold" Margin="0 0 20 00"/>
+                <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Width="300"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                <Button Content="Сохранить" Width="100" Margin="0 0 10 0"
                         Command="{Binding SaveCommand}" CommandParameter="{Binding}" IsEnabled="{Binding CanSave}" />
-                <Button Content="Удалить" Width="100" Margin="0,0,10,0"
+                <Button Content="Удалить" Width="100" Margin="0 0 10 0"
                         Command="{Binding DeleteCommand}" CommandParameter="{Binding}" IsEnabled="{Binding CanDelete}" />
                 <Button Content="Отмена" Command="{Binding CancelCommand}" CommandParameter="{Binding}" Width="100"/>
             </StackPanel>
+
+            <TextBlock Text="Сотрудники компании:" FontWeight="Bold" Margin="0,20,0,5"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <DataGrid ItemsSource="{Binding Employees}" IsReadOnly="True" AutoGenerateColumns="False" Margin="0 0 0 20" Height="380">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Фамилия" Binding="{Binding LastName}" Width="*"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding FirstName}" Width="*"/>
+                        <DataGridTextColumn Header="Отчество" Binding="{Binding Patronymic}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </Page>

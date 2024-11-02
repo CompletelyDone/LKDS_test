@@ -1,7 +1,6 @@
 ﻿using Data.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 using Model;
-using System.Windows;
 using System.Windows.Controls;
 using ViewModels.Abstractions;
 using ViewModels.ViewModels;
