@@ -29,9 +29,13 @@
             {
                 return "Поле не может быть пустым.";
             }
-            if (employee.LastName.Length < MIN_FIELD_LENGTH || employee.FirstName.Length > MIN_FIELD_LENGTH)
+            if (employee.LastName.Length < MIN_FIELD_LENGTH || employee.FirstName.Length < MIN_FIELD_LENGTH)
             {
-                return $"Длинна поля не может быть короче {MIN_FIELD_LENGTH} и длиннее {MAX_FIELD_LENGTH}.";
+                return $"Фамилия/Имя не может быть короче {MIN_FIELD_LENGTH}.";
+            }
+            if (employee.LastName.Length > MAX_FIELD_LENGTH || employee.FirstName.Length > MAX_FIELD_LENGTH)
+            {
+                return $"Фамилия/Имя не может быть короче {MIN_FIELD_LENGTH}.";
             }
             return error;
         }

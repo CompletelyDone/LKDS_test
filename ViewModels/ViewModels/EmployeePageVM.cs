@@ -29,8 +29,8 @@ namespace ViewModels.ViewModels
 
             FirstName = currentEmployee.FirstName;
             LastName = currentEmployee.LastName;
-            Patronymic = currentEmployee.Patronymic;
-            PhotoPath = currentEmployee.PhotoPath;
+            if(currentEmployee.Patronymic != null) Patronymic = currentEmployee.Patronymic;
+            if(currentEmployee.PhotoPath != null) PhotoPath = currentEmployee.PhotoPath;
             SelectedCompany = currentEmployee.Company;
 
             LoadCompaniesAsync().ConfigureAwait(false);
