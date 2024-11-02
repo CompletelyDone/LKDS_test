@@ -16,7 +16,7 @@ namespace ViewModels.ViewModels
             this.companyRepository = companyRepository;
             this.navigationService = navigationService;
             LoadCompaniesAsync().ConfigureAwait(false);
-            SearchCommand = new RelayCommand<object>(async _ => await SearchAsync());
+            SearchCommand = new RelayCommand(async () => await SearchAsync());
             AddCompanyCommand = new RelayCommand(AddCompanyAsync);
             EditCompanyCommand = new RelayCommand<Company>(company => EditCompanyAsync(company));
             DeleteCompanyCommand = new RelayCommand<Company>(async company => await DeleteCompanyAsync(company));
@@ -59,7 +59,10 @@ namespace ViewModels.ViewModels
         }
         private async Task EditCompanyAsync(Company company)
         {
-            navigationService.NavigateTo<CompanyPageVM>(company);
+            if (await companyRepository.GetByIdAsync(company.Id) != null)
+            {
+                navigationService.NavigateTo<CompanyPageVM>(company);
+            }
         }
         private async Task SearchAsync()
         {

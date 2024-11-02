@@ -21,8 +21,8 @@ namespace ViewModels.ViewModels
             currentCompany = company ?? new Company(Guid.Empty, string.Empty);
             Title = currentCompany.Title;
 
-            SaveCommand = new RelayCommand<object>(async _ => await SaveAsync(), CanSave);
-            DeleteCommand = new RelayCommand<object>(async _ => await DeleteAsync(), CanDelete);
+            SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
+            DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
             CancelCommand = new RelayCommand(GoBack);
         }
         private string title = string.Empty;

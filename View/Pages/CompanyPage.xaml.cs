@@ -23,9 +23,5 @@ namespace View.Pages
 
             DataContext = new CompanyPageVM(companyRepository, dialogService, navigationService, company);
         }
-        private void CancelButtonPressed(object sender, RoutedEventArgs e)
-        {
-            if(NavigationService.CanGoBack) NavigationService.GoBack();
-        }
     }
 }

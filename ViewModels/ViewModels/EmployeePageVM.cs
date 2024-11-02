@@ -1,5 +1,6 @@
 ﻿using Data.Abstractions;
 using Model;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using ViewModels.Abstractions;
 using ViewModels.Base;
@@ -26,9 +27,12 @@ namespace ViewModels.ViewModels
             Patronymic = currentEmployee.Patronymic;
             SelectedCompanyId = currentEmployee.CompanyId;
 
-            SaveCommand = new RelayCommand<object>(async _ => await SaveAsync(), CanSave);
-            DeleteCommand = new RelayCommand<object>(async _ => await DeleteAsync(), CanDelete);
+            LoadCompaniesAsync().ConfigureAwait(false);
+
+            SaveCommand = new RelayCommand(async () => await SaveAsync(), CanSave);
+            DeleteCommand = new RelayCommand(async () => await DeleteAsync(), CanDelete);
         }
+        public ObservableCollection<Company> Companies { get; } = [];
         public ICommand SaveCommand { get; }
         public ICommand DeleteCommand { get; }
         private string firstName = string.Empty;
@@ -83,15 +87,21 @@ namespace ViewModels.ViewModels
                 }
             }
         }
+        private async Task LoadCompaniesAsync()
+        {
+            var companies = await companyRepository.GetAllAsync();
+            Companies.Clear();
+            foreach (var company in companies)
+            {
+                Companies.Add(company);
+            }
+        }
         private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(FirstName) &&
                    !string.IsNullOrWhiteSpace(LastName);
         }
-        private bool CanDelete()
-        {
-            return currentEmployee != null && currentEmployee.Id != Guid.Empty;
-        }
+        private bool CanDelete() => currentEmployee != null && currentEmployee.Id != Guid.Empty;        
         private async Task SaveAsync()
         {
             currentEmployee.FirstName = FirstName;

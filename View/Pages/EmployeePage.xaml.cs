@@ -1,9 +1,12 @@
-﻿using Microsoft.Win32;
+﻿using Data.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ViewModels.Abstractions;
+using ViewModels.ViewModels;
 
 namespace View.Pages
 {
@@ -17,6 +20,12 @@ namespace View.Pages
         {
             InitializeComponent();
             this.navigationService = navigationService;
+
+            var employeeRepository = serviceProvider.GetRequiredService<IEmployeeRepository>();
+            var companyRepository = serviceProvider.GetRequiredService<ICompanyRepository>();
+            var dialogService = serviceProvider.GetRequiredService<IDialogService>();
+
+            DataContext = new EmployeePageVM(employeeRepository, companyRepository, dialogService, employee);
         }
 
         private void EmployeePhotoMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
