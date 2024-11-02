@@ -12,20 +12,25 @@ namespace ViewModels.ViewModels
         private readonly IEmployeeRepository employeeRepository;
         private readonly ICompanyRepository companyRepository;
         private readonly IDialogService dialogService;
+        private readonly INavigationService navigationService;
         private Employee currentEmployee;
-        public EmployeePageVM
-            (IEmployeeRepository employeeRepository, ICompanyRepository companyRepository, IDialogService dialogService, Employee? employee)
+        public EmployeePageVM(
+            IEmployeeRepository employeeRepository, 
+            ICompanyRepository companyRepository, 
+            IDialogService dialogService, 
+            INavigationService navigationService,
+            Employee? employee)
         {
             this.employeeRepository = employeeRepository;
             this.companyRepository = companyRepository;
             this.dialogService = dialogService;
-
+            this.navigationService = navigationService;
             currentEmployee = employee ?? new Employee(Guid.Empty, string.Empty, string.Empty, string.Empty, null, null);
 
             FirstName = currentEmployee.FirstName;
             LastName = currentEmployee.LastName;
             Patronymic = currentEmployee.Patronymic;
-            SelectedCompanyId = currentEmployee.CompanyId;
+            SelectedCompany = currentEmployee.Company;
 
             LoadCompaniesAsync().ConfigureAwait(false);
 
@@ -74,15 +79,15 @@ namespace ViewModels.ViewModels
                 }
             }
         }
-        private Guid? selectedCompanyId;
-        public Guid? SelectedCompanyId
+        private Company? selectedCompany;
+        public Company? SelectedCompany
         {
-            get => selectedCompanyId;
+            get => selectedCompany;
             set
             {
-                if (selectedCompanyId != value)
+                if (selectedCompany != value)
                 {
-                    selectedCompanyId = value;
+                    selectedCompany = value;
                     OnPropertyChanged();
                 }
             }
@@ -104,21 +109,29 @@ namespace ViewModels.ViewModels
         private bool CanDelete() => currentEmployee != null && currentEmployee.Id != Guid.Empty;        
         private async Task SaveAsync()
         {
-            currentEmployee.FirstName = FirstName;
-            currentEmployee.LastName = LastName;
-            currentEmployee.Patronymic = Patronymic;
-            currentEmployee.CompanyId = SelectedCompanyId;
-
-            if (currentEmployee.Id == Guid.Empty)
+            try
             {
-                await employeeRepository.CreateAsync(currentEmployee);
-            }
-            else
-            {
-                await employeeRepository.UpdateAsync(currentEmployee);
-            }
+                currentEmployee.FirstName = FirstName;
+                currentEmployee.LastName = LastName;
+                currentEmployee.Patronymic = Patronymic;
+                currentEmployee.Company = SelectedCompany;
 
-            dialogService.ShowMessage("Сотрудник успешно сохранен!");
+                if (currentEmployee.Id == Guid.Empty)
+                {
+                    await employeeRepository.CreateAsync(currentEmployee);
+                    dialogService.ShowMessage("Сотрудник успешно создан!");
+                    navigationService.GoBack();
+                }
+                else
+                {
+                    await employeeRepository.UpdateAsync(currentEmployee);
+                    dialogService.ShowMessage("Сотрудник успешно сохранен!");
+                }
+            }
+            catch (Exception ex)
+            {
+                dialogService.ShowMessage(ex.Message);
+            }
         }
         private async Task DeleteAsync()
         {

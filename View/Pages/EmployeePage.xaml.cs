@@ -25,7 +25,7 @@ namespace View.Pages
             var companyRepository = serviceProvider.GetRequiredService<ICompanyRepository>();
             var dialogService = serviceProvider.GetRequiredService<IDialogService>();
 
-            DataContext = new EmployeePageVM(employeeRepository, companyRepository, dialogService, employee);
+            DataContext = new EmployeePageVM(employeeRepository, companyRepository, dialogService, navigationService, employee);
         }
 
         private void EmployeePhotoMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
