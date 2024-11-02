@@ -31,7 +31,7 @@
                Width="150"
                Height="150"
                Stretch="Uniform"
-               Source="../Assets/defaultPerson.jpg" 
+               Source="{Binding PhotoPath, UpdateSourceTrigger=PropertyChanged}"
                MouseDown="EmployeePhotoMouseDown" />
         </StackPanel>
 
@@ -60,7 +60,7 @@
                          Text="{Binding Patronymic, UpdateSourceTrigger=PropertyChanged}"/>
                 <ComboBox Width="200" Margin="0 5 0 15"
                           ItemsSource="{Binding Companies}"
-                          SelectedValue="{Binding SelectedCompanyId}"
+                          SelectedValue="{Binding SelectedCompany}"
                           DisplayMemberPath="Title"
                           IsEditable="False"/>
             </StackPanel>

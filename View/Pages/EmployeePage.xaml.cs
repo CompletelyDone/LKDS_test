@@ -1,10 +1,9 @@
 ﻿using Data.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Win32;
 using Model;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using View.Utils;
 using ViewModels.Abstractions;
 using ViewModels.ViewModels;
 
@@ -30,15 +29,15 @@ namespace View.Pages
 
         private void EmployeePhotoMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog
-            {
-                Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp|All Files|*.*",
-                Title = "Выберите фотографию сотрудника"
-            };
-            if (openFileDialog.ShowDialog() == true)
-            {
-                EmployeePhoto.Source = new BitmapImage(new Uri(openFileDialog.FileName));
+            var dialogService = new DialogService();
+            var photoPath = dialogService.GetPhotoPath();
 
+            if (!string.IsNullOrEmpty(photoPath))
+            {
+                EmployeePhoto.Source = new BitmapImage(new Uri(photoPath));
+
+                var viewModel = (EmployeePageVM)DataContext;
+                viewModel.PhotoPath = photoPath;
             }
         }
     }

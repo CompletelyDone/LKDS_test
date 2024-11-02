@@ -30,6 +30,7 @@ namespace ViewModels.ViewModels
             FirstName = currentEmployee.FirstName;
             LastName = currentEmployee.LastName;
             Patronymic = currentEmployee.Patronymic;
+            PhotoPath = currentEmployee.PhotoPath;
             SelectedCompany = currentEmployee.Company;
 
             LoadCompaniesAsync().ConfigureAwait(false);
@@ -81,6 +82,16 @@ namespace ViewModels.ViewModels
                 }
             }
         }
+        private string photoPath = "../Assets/defaultPerson.jpg";
+        public string PhotoPath
+        {
+            get => photoPath;
+            set
+            {
+                photoPath = value;
+                OnPropertyChanged();
+            }
+        }
         private Company? selectedCompany;
         public Company? SelectedCompany
         {
@@ -121,6 +132,7 @@ namespace ViewModels.ViewModels
                 currentEmployee.LastName = LastName;
                 currentEmployee.Patronymic = Patronymic;
                 currentEmployee.Company = SelectedCompany;
+                currentEmployee.PhotoPath = PhotoPath;
 
                 if (currentEmployee.Id == Guid.Empty)
                 {
